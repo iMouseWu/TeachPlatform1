@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 在Spring中配置Hibernate -->
+	 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	destroy-method="close">
+	<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+	                                        
+		<property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=homework"/>
+		<property name="username" value="sa"/>
+		<property name="password" value="sql"/>
+	</bean>
+	<!-- session工厂配置 -->
+	<bean id="sessionFactory" 
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" 
+		destroy-method="destroy">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingResources">
+			<list>
+				<value>com/zjut/teach/model/Teacher.hbm.xml</value>
+				<value>com/zjut/teach/model/Student.hbm.xml</value>
+				<value>com/zjut/teach/model/Chat.hbm.xml</value>
+				<value>com/zjut/teach/model/Chat_User.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop 
+				key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="loginDaoImpl" class="com.zjut.teach.daoimpl.LoginDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="loginServiceImpl" class="com.zjut.teach.serviceimpl.LoginServiceImpl">
+	<property name="loginDao" ref="loginDaoImpl"></property>
+	</bean>
+	<bean id="loginAction" class="com.zjut.teach.action.LoginAction">
+	<property name="loginServiceImpl" ref="loginServiceImpl"></property>
+	</bean>
+	<bean id="teacherDaoImpl" class="com.zjut.teach.daoimpl.TeacherDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="teacherServiceImpl" class="com.zjut.teach.serviceimpl.TeacherServiceImpl">
+	<property name="teacherDaoImpl" ref="teacherDaoImpl"></property>
+	</bean>
+	<bean id="searchTeacherAction" class="com.zjut.teach.action.SearchTeacherAction">
+	<property name="teacherServiceImpl" ref="teacherServiceImpl"></property>
+	</bean>
+	<bean id="studentDaoImpl" class="com.zjut.teach.daoimpl.StudentDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="studentSourceServiceImpl" class="com.zjut.teach.serviceimpl.StudentSourceServiceImpl">
+	<property name="studentDaoImpl" ref="studentDaoImpl"></property>
+	</bean>
+	<bean id="studentSourceAction" class="com.zjut.teach.action.StudentSourceAction">
+	<property name="studentSourceServiceImpl" ref="studentSourceServiceImpl"></property>
+	</bean>
+	<bean id="chatDaoImpl" class="com.zjut.teach.daoimpl.ChatDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="chatServiceImpl" class="com.zjut.teach.serviceimpl.ChatServiceImpl">
+	<property name="chatDaoImpl" ref="chatDaoImpl"></property>
+	<property name="studentDaoImpl" ref="studentDaoImpl"></property>
+	<property name="teacherDaoImpl" ref="teacherDaoImpl"></property>
+	</bean>
+	<bean id="chatAction" class="com.zjut.teach.action.ChatAction">
+	<property name="chatServiceImpl" ref="chatServiceImpl"></property>
+	</bean>
+		
+</beans>
+

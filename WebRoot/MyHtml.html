@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyHtml.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+  <input type="text" id="username" name="student.name">
+  <input type="button" id="send">
+    <div id="htmlinfo"></div>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script language="JavaScript" type="text/javascript">
+    $(function(){
+    $("#send").click(function(){
+    $.get("json1",{
+    	name:$("#username").val()},function(data,textStatus){
+    		alert(data);
+    	var name = data.student.name;
+    	alert(name);
+    $("#htmlinfo").html(name);
+    },"json");
+    })
+    })
+    </script>
+  </body>
+</html>

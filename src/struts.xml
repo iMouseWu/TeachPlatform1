@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="testspring" extends="struts-default">
+<interceptors>
+<!-- 登陆拦截器 -->
+<interceptor name="logincheck" class="com.zjut.teach.interceptor.LoginInterceptor"/>
+<!-- 定义默认拦截器 -->
+<interceptor-stack name="otherdefaultStack">
+<interceptor-ref name="logincheck"/>
+<interceptor-ref name="defaultStack"/>
+</interceptor-stack>
+</interceptors>
+<!-- 定义全局 result-->
+<global-results>
+<result name="error">nologin.jsp</result>
+</global-results>
+<action name="Login" class="com.zjut.teach.action.LoginAction">
+<result name="success">Homepage.jsp</result>
+<result name="login">login.jsp</result>
+</action>
+<action name="SearchTeacher" class="com.zjut.teach.action.SearchTeacherAction">
+<result name="allteacherinfo">allteainfo.jsp</result>
+<result name="oneteacherinfo">oneteainfo.jsp</result>
+</action>
+<action name="StudentSource" class="com.zjut.teach.action.StudentSourceAction">
+<result name="Perinfo">perinfo.jsp</result>
+<result name="modifysucceed">modifysucceed.jsp</result>
+<result name="viewdownloads">viewdownloads.jsp</result>
+</action>
+<action name="uploads" class="com.zjut.teach.action.UploadAction">
+<param name="savePath">F:/apache-tomcat-7.0.37/webapps/TeachPlatform/Resources</param>
+<result name="success">Homepage.jsp</result>
+<result name="input">MyJsp.jsp</result>
+</action>
+<action name="Chat_User" class="com.zjut.teach.action.ChatAction">
+<result name="success">Chat.jsp</result>
+</action>
+</package>
+<package name="json" extends="json-default" >  
+        <action name="Chat" class="com.zjut.teach.action.ChatAction">  
+            <result type="json"></result>  
+        </action>  
+    </package>  
+</struts>    

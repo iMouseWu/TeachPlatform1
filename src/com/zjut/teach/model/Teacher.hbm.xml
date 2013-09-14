@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ 
+<class name="com.zjut.teach.model.Teacher" table="teacher_table">
+<id name="id" type="java.lang.Integer" column="id">
+   <generator class="native"/>
+  </id>
+<property name="username" column="tea_Id"></property>
+<property name="password" column="tea_Password"></property>
+<property name="tea_Name"></property>
+<property name="tea_Phone"></property>
+<property name="tea_QQ"></property>
+<property name="limitauthority" column="authority"></property>
+</class>
+</hibernate-mapping>
